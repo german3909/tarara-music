@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: tarara-music-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tarara_music
+      POSTGRES_USER: tarara
+      POSTGRES_PASSWORD: tarara
+    ports:
+      - '5432:5432'
+    volumes:
+      - tarara_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U tarara -d tarara_music']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  tarara_pgdata:
