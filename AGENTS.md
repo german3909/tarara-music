@@ -15,3 +15,4 @@ Antes de empezar a programar, lee el documento del proyecto que está en esta ca
 
 ## 4. Terminado significa
 Todas las pruebas de aceptación (PA-01, PA-02, …) pasan en verde y los requisitos "Must" están cubiertos.
+.
