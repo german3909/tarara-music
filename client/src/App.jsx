@@ -360,7 +360,7 @@ export default function App() {
                 <span>sin distracciones.</span>
               </h1>
               <p>
-                {songs.length} canciones en MP3, WAV, FLAC y AAC. Sin anuncios, sin
+                {songs.length} canciones Sin anuncios, sin
                 suscripciones y lista en menos de 3 segundos.
               </p>
               <div className="hero-actions">

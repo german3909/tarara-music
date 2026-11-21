@@ -1,0 +1,104 @@
+classDiagram
+    class User {
+        +int id
+        +string name
+        +string email
+        +string passwordHash
+        +datetime createdAt
+        +registrar()
+        +iniciarSesion()
+        +actualizarPerfil()
+        +cambiarPassword()
+    }
+
+    class Song {
+        +int id
+        +string title
+        +string artist
+        +string album
+        +int duration
+        +string format
+        +string url
+        +string cover
+        +bool isFavorite
+    }
+
+    class Favorite {
+        +int userId
+        +int songId
+        +datetime createdAt
+    }
+
+    class Playlist {
+        +int id
+        +int userId
+        +string name
+        +datetime createdAt
+        +int songCount
+        +crear()
+        +renombrar()
+        +eliminar()
+        +agregarCancion()
+        +quitarCancion()
+    }
+
+    class PlaylistSong {
+        +int playlistId
+        +int songId
+        +int position
+        +datetime addedAt
+    }
+
+    class AuthService {
+        +registrar(datos)
+        +login(email, password)
+        -firmarToken(usuario)
+    }
+
+    class SongService {
+        +listar(busqueda)
+        +obtener(id)
+        +formatos()
+    }
+
+    class LibraryService {
+        +favoritos(userId)
+        +agregarFavorito(userId, songId)
+        +quitarFavorito(userId, songId)
+    }
+
+    class PlaylistService {
+        +listar(userId)
+        +crear(userId, nombre)
+        +detalle(userId, playlistId)
+        +renombrar(userId, playlistId, nombre)
+        +eliminar(userId, playlistId)
+        +agregarCancion(userId, playlistId, songId)
+        +quitarCancion(userId, playlistId, songId)
+    }
+
+    class PlayerController {
+        +queue
+        +currentSong
+        +isPlaying
+        +volume
+        +playSong(cancion, cola)
+        +togglePlay()
+        +next()
+        +previous()
+        +seek(segundos)
+        +setVolume(valor)
+        +toggleMute()
+    }
+
+    User "1" --> "0..*" Favorite : guarda
+    User "1" --> "0..*" Playlist : crea
+    Song "1" --> "0..*" Favorite : recibe
+    Playlist "1" --> "0..*" PlaylistSong : contiene
+    Song "1" --> "0..*" PlaylistSong : aparece
+
+    AuthService ..> User : gestiona
+    SongService ..> Song : consulta
+    LibraryService ..> Favorite : gestiona
+    PlaylistService ..> Playlist : gestiona
+    PlayerController ..> Song : reproduce

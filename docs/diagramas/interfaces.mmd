@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph Shell["Shell persistente"]
+        Sidebar["Sidebar<br/>Biblioteca · Favoritos · Listas<br/>Mis listas · cuenta"]
+        Header["Header<br/>buscador + sesión"]
+        Player["PlayerBar<br/>reproductor fijo"]
+    end
+
+    subgraph Pantallas["Pantallas / vistas"]
+        Biblioteca["Biblioteca<br/>10 canciones<br/>filtros MP3/WAV/FLAC/AAC"]
+        Busqueda["Resultados de búsqueda<br/>título · artista · álbum"]
+        Favoritos["Favoritos<br/>requiere sesión"]
+        Listas["Mis listas<br/>crear · abrir · eliminar"]
+        Detalle["Detalle de lista<br/>reproducir · quitar canciones"]
+        Perfil["Perfil<br/>datos + contraseña"]
+        Auth["Modal Auth<br/>iniciar sesión / registro"]
+    end
+
+    Sidebar -->|Biblioteca| Biblioteca
+    Sidebar -->|Favoritos| Favoritos
+    Sidebar -->|Listas| Listas
+    Sidebar -->|Iniciar sesión| Auth
+    Sidebar -->|Perfil| Perfil
+    Header -->|escribir búsqueda| Busqueda
+    Header -->|avatar| Perfil
+    Biblioteca -->|corazón sin sesión| Auth
+    Favoritos -->|sin sesión| Auth
+    Listas -->|abrir lista| Detalle
+    Listas -->|crear lista sin sesión| Auth
+    Auth -->|sesión iniciada| Perfil
+    Player -.->|visible en todas las vistas| Shell

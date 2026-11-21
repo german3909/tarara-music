@@ -1,0 +1,37 @@
+flowchart TD
+    subgraph Cliente["Cliente · navegador"]
+        UI["Interfaz React + Vite<br/>responsive"]
+        Hook["useAudioPlayer<br/>HTML5 Audio"]
+        ApiClient["lib/api.js<br/>fetch + JWT"]
+        Storage[("localStorage<br/>token JWT")]
+    end
+
+    subgraph Servidor["Servidor · Node.js + Express"]
+        Express["app.js<br/>Express"]
+        AuthRoutes["/api/auth<br/>registro y login"]
+        SongRoutes["/api/songs · /api/formats<br/>biblioteca y búsqueda"]
+        MeRoutes["/api/me · /api/favorites<br/>/api/playlists"]
+        AuthMW["middleware/auth.js<br/>verificación JWT"]
+        Static["Estáticos<br/>/media · /covers"]
+    end
+
+    DB[("PostgreSQL<br/>(pg-mem en demo/pruebas)")]
+    Media[("Audio local<br/>MP3 · WAV · FLAC · AAC")]
+    Covers[("Portadas SVG")]
+
+    UI --> ApiClient
+    UI --> Hook
+    ApiClient -->|HTTP / JSON| Express
+    ApiClient <--> Storage
+    Hook -->|streaming| Static
+    Express --> AuthRoutes
+    Express --> SongRoutes
+    Express --> MeRoutes
+    Express --> Static
+    AuthRoutes --> DB
+    SongRoutes --> DB
+    MeRoutes --> AuthMW
+    AuthMW --> DB
+    AuthRoutes -.->|bcrypt + JWT| AuthRoutes
+    Static --> Media
+    Static --> Covers

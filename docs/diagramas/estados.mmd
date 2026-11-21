@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> SinCancion
+    SinCancion --> Reproduciendo : playSong(canción)
+    Reproduciendo --> Pausado : pause()
+    Pausado --> Reproduciendo : resume()
+    Reproduciendo --> Reproduciendo : next() / previous()
+    Reproduciendo --> Reproduciendo : ended → siguiente pista
+    Reproduciendo --> Silenciado : volume = 0 / mute
+    Silenciado --> Reproduciendo : volumen > 0 / unmute
+    Pausado --> SinCancion : logout / limpiar cola
